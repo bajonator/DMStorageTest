@@ -1,0 +1,102 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentsViewModel
+
+<div class="table-responsive" id="machineTable" style="max-height: 580px; overflow-y: auto;">
+    <table class="custom-table table-dark">
+        <thead class="thead-dark sticky-thead">
+            <tr>
+                @*                 <th scope="col">ID</th>
+                *@
+                <th scope="col">ID Oddeleni</th>
+                <th scope="col">Oddeleni</th>
+                <th scope="col">Stroj</th>
+                <th scope="col">IP</th>
+                <th scope="col">VLan</th>
+                <th scope="col">Mac Adress</th>
+                <th scope="col">PLC</th>
+                <th scope="col">OPC_Driver</th>
+                <th scope="col">OPC_PLC</th>
+                <th scope="col">DMCZ_Connection</th>
+                <th scope="col">Port</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="tMachineBody">
+            @if (Model != null && Model.Departments.Any())
+            {
+                foreach (var dep in Model.Departments)
+                {
+                    @if (Model != null && Model.Machines.Any())
+                    {
+                        foreach (var machine in dep.Machines)
+                        {
+                            <tr>
+                                <td>@dep.Number</td>
+                                <td>@dep.Name</td>
+                                <td>@machine.Name</td>
+                                <td>@machine.Ip</td>
+                                <td>@machine.VLan</td>
+                                <td>@machine.MacAdress</td>
+                                <td>@machine.Original_PLC</td>
+                                <td>@machine.OPC_Driver</td>
+                                <td>@machine.OPC_PLC</td>
+                                <td>@machine.DMCZ_Connection</td>
+                                <td>@machine.Port</td>
+                                <td style="width:100px">
+                                    @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology")))
+                                    {
+                                        <button class="btn bg-transparent btn-sm btn-outline-primary text-warning border-0 btn-delete mr-3" style="font-size:14px; padding:0;" data-toggle="modal" data-target="#exampleModal" title="Edituj" data-url="@Url.Action("AddMachine", "Machine", new { id = machine.Id })" onclick="loadMachinePartialView(this)" style="cursor: pointer;">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="btn bg-transparent btn-sm btn-outline-primary text-danger border-0 btn-delete mr-3" style="font-size:14px; padding:0;" title="Odstranit" onclick="deleteMachine('@machine.Id', this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center" colspan="12">
+                                Neni nic v databazi k zobrazeni.
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center" colspan="12">
+                        Neni nic v databazi k zobrazeni.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script>
+    // document.addEventListener('DOMContentLoaded', function () {
+    //     var rows = document.querySelectorAll('.clickable-row');
+    //     rows.forEach(function (row) {
+    //         row.addEventListener('click', function () {
+    //             var url = row.getAttribute('data-url');
+    //             window.location.href = url;
+    //         });
+    //     });
+    // });
+
+    function loadMachinePartialView(element) {
+        var url = $(element).data('url');
+        console.log("Loading partial view from URL: " + url);
+
+        $.get(url, function (data) {
+            $('#partialContent').html(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error loading partial view: ", textStatus, errorThrown);
+        });
+    }
+</script>

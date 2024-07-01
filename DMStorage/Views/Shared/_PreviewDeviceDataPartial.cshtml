@@ -1,0 +1,69 @@
+﻿@model List<DMStorage.Core.Models.Domains.DeviceImport>
+
+@{
+    ViewData["Title"] = "Preview Data";
+    var fileName = TempData["filePath"] as string;
+}
+
+<h4 class="my-3 text-info text-center">Prehled dat pro: @fileName</h4>
+<form id="saveDeviceToDatabaseForm">
+
+    <div class="table-responsive my-border">
+        <table class="custom-table table-dark">
+            <thead class="thead-dark sticky-top">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Mac Adress</th>
+                    <th scope="col">IP</th>
+                    <th scope="col">InventoryNumber</th>
+                    <th scope="col">SerialNumber</th>
+                    <th scope="col">WPAUserName</th>
+                    <th scope="col">WPAPassword</th>
+                    <th scope="col">State</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="Name" value="@Model[i].Name" />
+                            @Model[i].Name
+                        </td>
+                        <td>
+                            <input type="hidden" name="MacAdress" value="@Model[i].MacAdress" />
+                            @Model[i].MacAdress
+                        </td>
+                        <td>
+                            <input type="hidden" name="Ip" value="@Model[i].Ip" />
+                            @Model[i].Ip
+                        </td>
+                        <td>
+                            <input type="hidden" name="InventoryNumber" value="@Model[i].InventoryNumber" />
+                            @Model[i].InventoryNumber
+                        </td>
+                        <td>
+                            <input type="hidden" name="SerialNumber" value="@Model[i].SerialNumber" />
+                            @Model[i].SerialNumber
+                        </td>
+                        <td>
+                            <input type="hidden" name="WPAUserName" value="@Model[i].WPAUserName" />
+                            @Model[i].WPAUserName
+                        </td>
+                        <td>
+                            <input type="hidden" name="WPAPassword" value="@Model[i].WPAPassword" />
+                            @Model[i].WPAPassword
+                        </td>
+                        <td>
+                            <input type="hidden" name="State" value="@Model[i].State" />
+                            @Model[i].State
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" name="file" value="@TempData["fileName"]" />
+    <button type="submit" class="btn btn-success mt-2">Ulozit do databazi</button>
+</form>

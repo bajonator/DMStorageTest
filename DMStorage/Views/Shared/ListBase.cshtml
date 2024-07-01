@@ -1,0 +1,27 @@
+﻿@model DMStorage.Core.ViewModels.ListsViewModel
+
+@{
+    ViewData["Title"] = "List";
+}
+
+@* <form class="form-inline justify-content-end" onsubmit="searchText(event)">
+    <input class="form-control mt-2 mr-sm-2 bg-dark text-light" style="height:30px" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+    <button class="btn btn-sm btn-outline-success mt-2" type="submit">Search</button>
+</form> *@
+
+<div class="my-Container my-border p-3">
+    <div class="row" >
+        <div class="mt-2 col-3">
+            @await Html.PartialAsync("/Views/Machine/_ListDepartmentsPartial.cshtml", Model)
+        </div>
+        <div class="mt-2 col-3">
+            @await Html.PartialAsync("/Views/Machine/_ListMachinesPartial.cshtml", Model)
+        </div>
+        <div class="mt-2 col-3 ">
+            @await Html.PartialAsync("/Views/Device/_ListTypeDevicePartial.cshtml", Model)
+        </div>  
+        <div class="mt-2 col-3">
+            @await Html.PartialAsync("/Views/Device/_ListDevicePartial.cshtml", Model)
+        </div>
+    </div>
+</div>

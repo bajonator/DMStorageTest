@@ -1,0 +1,157 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentsViewModel
+
+@{
+    ViewData["Title"] = "Add Machine";
+}
+
+@if (Model.Machine.Id > 0)
+{
+    <h3 class="text-center my-text-shadow">Edice stroju</h3>
+
+}
+else
+{
+    <h3 class="text-center my-text-shadow">Novy stroj</h3>
+
+}
+
+<form id="machineForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Machine.Id, new { @id = "Machine.Id" })
+    @Html.Hidden("MachineId", Model.Machine.Id)
+    @Html.ValidationSummary()
+    <div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Machine.Name)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.Name, new { @class = "form-control bg-dark text-light", id = "machineName", placeholder = "Nazev stroje" })
+                <span asp-validation-for="Machine.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Machine.DepartmentId, new { @class = "control-label" })
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.DropDownListFor(x => x.Machine.DepartmentId,
+                         new SelectList(Model.Departments, "Id", "Name"),
+                         "--zvolte oddeleni--",
+                         new { @class = "form-control bg-dark text-light", id = "departmentId" })
+                <span asp-validation-for="Machine.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Machine.Ip)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.Ip, new { @class = "form-control bg-dark text-light", id = "machineIp", placeholder = "IP" })
+                <span asp-validation-for="Machine.Ip" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Machine.VLan)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.VLan, new { @class = "form-control bg-dark text-light", id = "machineVlan", placeholder = "VLan" })
+                <span asp-validation-for="Machine.VLan" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Machine.Port)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.Port, new { @class = "form-control bg-dark text-light", id = "machinePort", placeholder = "Port" })
+                <span asp-validation-for="Machine.Port" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Machine.MacAdress)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.MacAdress, new { @class = "form-control bg-dark text-light", id = "machineMacAdress", placeholder = "MAC adress" })
+                <span asp-validation-for="Machine.MacAdress" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Machine.Original_PLC)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.Original_PLC, new { @class = "form-control bg-dark text-light", id = "machinePlcName", placeholder = "Original_PLC" })
+                <span asp-validation-for="Machine.Original_PLC" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Machine.OPC_Driver)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.OPC_Driver, new { @class = "form-control bg-dark text-light", id = "machineOPC_Driver", placeholder = "OPC Driver" })
+                <span asp-validation-for="Machine.OPC_Driver" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Machine.OPC_PLC)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.OPC_PLC, new { @class = "form-control bg-dark text-light", id = "machineOPC_PLC", placeholder = "OPC PLC" })
+                <span asp-validation-for="Machine.OPC_PLC" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Machine.DMCZ_Connection)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Machine.DMCZ_Connection, new { @class = "form-control bg-dark text-light", id = "machineDMCZ_Connection", placeholder = "DMCZ-Connection" })
+                <span asp-validation-for="Machine.DMCZ_Connection" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex flex-column text-center justify-content-center align-items-center">
+            <button class="btn btn-primary btn-sm mt-0 mr-3 ml-3 mb-3" type="button" onclick="AddMachine();">
+                Ulozit
+            </button>
+        </div>
+        <div class="container-fluid d-flex justify-content-center my-border p-2 btn-group">
+            <button type="button" id="reloadDepartmentBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat oddeleni</button>
+            <button type="button" id="reloadVariableBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat promennou</button>
+        </div>
+    </div>
+</form>
+
+<script src="~/js/machines.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function loadPartialView(partialViewUrl, reloadButtonId) {
+            $.get(partialViewUrl, function (data) {
+                $('#partialContent').html(data);
+
+            });
+        }
+        $("#reloadDepartmentBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddDepartment", "Machine")', '#reloadDepartmentBtn');
+        });
+        $("#reloadVariableBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddVariable", "Machine")', '#reloadVariableBtn');
+        });
+    });
+
+    $(document).ready(function () {
+        $('#machineForm').submit(function (event) {
+            event.preventDefault();
+            AddMachine();
+        });
+    });
+
+
+</script>

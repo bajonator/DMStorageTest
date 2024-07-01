@@ -1,0 +1,77 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20240522210526_User.cs" />
+    <Compile Remove="Migrations\20240522210526_User.Designer.cs" />
+    <Compile Remove="Migrations\20240523190531_Init.cs" />
+    <Compile Remove="Migrations\20240523190531_Init.Designer.cs" />
+    <Compile Remove="Migrations\20240525132206_Account.cs" />
+    <Compile Remove="Migrations\20240525132206_Account.Designer.cs" />
+    <Compile Remove="Migrations\20240525132344_AddNewColumnsToRole.cs" />
+    <Compile Remove="Migrations\20240525132344_AddNewColumnsToRole.Designer.cs" />
+    <Compile Remove="Migrations\20240525132411_RemoveRoleName.cs" />
+    <Compile Remove="Migrations\20240525132411_RemoveRoleName.Designer.cs" />
+    <Compile Remove="Migrations\20240525132616_Account.cs" />
+    <Compile Remove="Migrations\20240525132616_Account.Designer.cs" />
+    <Compile Remove="Migrations\20240525132711_Account.cs" />
+    <Compile Remove="Migrations\20240525132711_Account.Designer.cs" />
+    <Compile Remove="Migrations\20240525132742_AddNewColumnsToRole.cs" />
+    <Compile Remove="Migrations\20240525132742_AddNewColumnsToRole.Designer.cs" />
+    <Compile Remove="Migrations\20240525132808_RemoveRoleName.cs" />
+    <Compile Remove="Migrations\20240525132808_RemoveRoleName.Designer.cs" />
+    <Compile Remove="Migrations\20240525132824_RemoveRoleNameUpdate-Database.cs" />
+    <Compile Remove="Migrations\20240525132824_RemoveRoleNameUpdate-Database.Designer.cs" />
+    <Compile Remove="Migrations\20240525133055_Init.cs" />
+    <Compile Remove="Migrations\20240525133055_Init.Designer.cs" />
+    <Compile Remove="Migrations\20240525134643_AddIdentityColumns.cs" />
+    <Compile Remove="Migrations\20240525134643_AddIdentityColumns.Designer.cs" />
+    <Compile Remove="Migrations\20240525135229_Init.cs" />
+    <Compile Remove="Migrations\20240525135229_Init.Designer.cs" />
+    <Compile Remove="Migrations\20240525140456_Init.cs" />
+    <Compile Remove="Migrations\20240525140456_Init.Designer.cs" />
+    <Compile Remove="Migrations\20240530162501_test.cs" />
+    <Compile Remove="Migrations\20240530162501_test.Designer.cs" />
+    <Compile Remove="Migrations\20240531201000_AddnumberDepProperty.cs" />
+    <Compile Remove="Migrations\20240531201000_AddnumberDepProperty.Designer.cs" />
+    <Compile Remove="Migrations\20240603154401_Inits.cs" />
+    <Compile Remove="Migrations\20240603154401_Inits.Designer.cs" />
+    <Compile Remove="Migrations\20240603154533_migration[0].cs" />
+    <Compile Remove="Migrations\20240603154533_migration[0].Designer.cs" />
+    <Compile Remove="Migrations\20240603155127_init.cs" />
+    <Compile Remove="Migrations\20240603155127_init.Designer.cs" />
+    <Compile Remove="Migrations\20240603164511_Init.cs" />
+    <Compile Remove="Migrations\20240603164511_Init.Designer.cs" />
+    <Compile Remove="Migrations\20240603165335_Inits.cs" />
+    <Compile Remove="Migrations\20240603165335_Inits.Designer.cs" />
+    <Compile Remove="Migrations\20240603170037_Inits.cs" />
+    <Compile Remove="Migrations\20240603170037_Inits.Designer.cs" />
+    <Compile Remove="Migrations\20240606042848_inits.cs" />
+    <Compile Remove="Migrations\20240606042848_inits.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Views\Device\Device.cshtml" />
+    <None Include="Views\Device\_AddDevicePartial.cshtml" />
+    <None Include="Views\Device\_AddTypeDevicePartial.cshtml" />
+    <None Include="Views\Device\_DeviceDataTablePartial.cshtml" />
+    <None Include="Views\Device\_ListDevicePartial.cshtml" />
+    <None Include="Views\Device\_ListTypeDevicePartial.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Core" Version="1.6.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.32" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.32">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="NPOI" Version="2.7.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,18 @@
+﻿@model DMStorage.Core.ViewModels.ListsViewModel
+
+<h6 style="color: #39cf6a">Seznam stroju</h6>
+<div class="my-border">
+    <ul class="col-12 scrollable-list">
+        @foreach (var mach in Model.Machines)
+        {
+            <li>
+                <a href="@Url.Action("Details", "Home", new { type = "machine", id = mach.Id })">
+                    <div class="row p-0 m-0">
+                        <p class="text-secondary"> (@mach.Department.Name)</p>
+                        <p>  @mach.Name</p>
+                    </div>
+                </a>
+            </li>
+        }
+    </ul>
+</div>

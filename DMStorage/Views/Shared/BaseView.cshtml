@@ -1,0 +1,82 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentsViewModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+
+@* <h1 class="text-center shadow-sm mb-5 mt-5 my-text-shadow">FiOT Machines & Devices Storage</h1> *@
+@* <form class="form-inline justify-content-end " action="@Url.Action("Search", "Home")" method="get">
+    <input class="form-control mt-2 mr-sm-2 bg-dark text-light" style="height:30px; z-index:1" type="search" name="query" id="searchInput" placeholder="Search" aria-label="Search">
+    <button class="btn btn-sm btn-outline-success mt-2" style="z-index:1" type="submit">Search</button>
+</form> *@
+<div class="myContainerLogin">
+    <div class="container d-flex justify-content-center align-items-center my-border mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                @*             <h3 class="text-dark my-text-shadow mt-1 mb-5 text-center">Stroje</h3>
+                *@            <div class="text-dark m-2">
+                    <div class=" d-flex flex-row">
+
+                        <div class="my-containerBtn btn-group" role="group" aria-label="Basic example">
+                            @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology") || ((IList<string>)ViewData["UserRoles"]).Contains("Maintenance")))
+                            {
+                                <button type="button" class="btn btn-outline-danger d-flex flex-column align-items-center" id="addDepartmentBtn2" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddDepartment", "Machine")">
+                                    <i class="fas fa-plus mb-1"></i>
+                                    <span>Oddeleni</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger d-flex flex-column align-items-center" id="addMachineBtn2" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddMachine", "Machine")">
+                                    <i class="fas fa-plus mb-1"></i>
+                                    <span>Stroj</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger d-flex flex-column align-items-center" id="addVariableBtn2" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddVariable", "Machine")">
+                                    <i class="fas fa-plus mb-1"></i>
+                                    <span>Promenne</span>
+                                </button>
+                            }
+                            <a type="button" class="btn btn-outline-primary btnList d-flex flex-column align-items-center" asp-area="" asp-controller="Machine" asp-action="MachinesManagement">
+                                <i class="fas fa-eye mb-1"></i>
+                                <span>Zobrazit stroje</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center my-border center-div mt-2">
+        <div class="row">
+            <div class="col-md-12 ">
+                @*             <h3 class="text-dark my-text-shadow mt-1 mb-5 text-center">Zarizeni</h3>
+                *@            <div class="text-dark m-2 ">
+                    <div class="d-flex flex-row">
+
+                        <div class="my-containerBtn btn-group" role="group" aria-label="Basic example">
+                            @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology") || ((IList<string>)ViewData["UserRoles"]).Contains("Maintenance")))
+                            {
+                                <button type="button" id="addTypeDeviceBtn2" class="btn btn-outline-danger d-flex flex-column align-items-center" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddTypeDevice", "Device")">
+                                    <i class="fas fa-plus mb-1"></i>
+                                    <span>Typ zarizeni</span>
+                                </button>
+                                <button type="button" id="addDeviceBtn2" class="btn btn-outline-danger d-flex flex-column align-items-center" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddDevice", "Device")">
+                                    <i class="fas fa-plus mb-1"></i>
+                                    <span>Zarizeni</span>
+                                </button>
+                                <button type="button" class="btn btn-outline-danger d-flex flex-column align-items-center">
+                                    <i class="fas fa-box mb-1"></i>
+                                    <span>Inventory</span>
+                                </button>
+                            }
+                            <a type="button" class="btn btnList btn-outline-primary d-flex flex-column align-items-center" asp-area="" asp-controller="Device" asp-action="DevicesManagement">
+                                <i class="fas fa-eye mb-1"></i>
+                                <span>Zobrazit zarizeni</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<link href="~/css/mainstylesheet.css" rel="stylesheet" />

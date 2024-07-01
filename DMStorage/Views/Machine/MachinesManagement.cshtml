@@ -1,0 +1,53 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentViewModel
+
+@{
+    ViewData["Title"] = "Machines Management";
+}
+
+<div class="row mt-5 ">
+    <div class="col-md-3">
+        <ul class="nav flex-column border-top border-left border-primary">
+            <li class="nav-item">
+                <a class="nav-link active border-0" data-toggle="tab" href="#department">Oddeleni</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#machine">Stroj</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#variable">Promenne</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-9">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="department">
+                @await Html.PartialAsync("AddDepartment", Model)
+
+            </div>
+            <div class="tab-pane fade" id="machine">
+                @if (Model.Departments != null && Model.Departments.Any())
+                {
+                    @await Html.PartialAsync("AddMachine", Model)
+                }
+                else
+                    @await Html.PartialAsync("AddDepartment", Model)
+
+            </div>
+            <div class="tab-pane fade" id="variable">
+                @if (Model.Machines != null && !Model.Machines.Any())
+                {
+                    @await Html.PartialAsync("AddDepartment", Model)
+                }
+                else if (Model.Machines != null && Model.Machines.Any())
+                {
+                    @await Html.PartialAsync("AddVariable", Model)
+                }
+                else
+                {
+                    @await Html.PartialAsync("AddMachine", Model)
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

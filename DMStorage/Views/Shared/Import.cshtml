@@ -1,0 +1,211 @@
+﻿@using Microsoft.AspNetCore.Http
+@model List<string>
+
+@{
+    ViewData["Title"] = "Import";
+}
+
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <div class="btn-group col-5 p-2 my-border" role="group">
+        <input type="file" name="file" accept=".xlsx" class="form-control-file btn btn-danger" />
+        <button type="submit" class="col-3 btn btn-primary">Nacist listy</button>
+    </div>
+    <div class="container text-center my-border bg-dark mt-2" id="loading" style="display: none; font-size:20px;">
+        <span class="text-danger">Nacitani...</span>
+    </div>
+    <div class="container bg-dark mt-2">
+        @if (TempData["Error"] != null)
+        {
+            <span class="text-danger">@TempData["Error"]</span>
+        }
+    </div>
+</form>
+<div id="partialViewContainer" class=" my-border col-5 mb-2" style="display:none;">
+</div>
+<div id="sheetSelectionContainer" class="my-border col-12 mb-2" style="display:none;">
+</div>
+<div id="generatedContainer" class="my-border col-12 mb-2" style="display:none;">
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#uploadForm').on('submit', function (event) {
+            event.preventDefault();
+            $('#sheetSelectionContainer').hide();
+            $('#generatedContainer').hide();
+            $('#partialViewContainer').hide();
+            var result = ValidateFile();
+            if (result == false) {
+                return false;
+            }
+            var formData = new FormData(this);
+            $.ajax({
+                url: '/Files/Upload',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#loading').show();
+                    $('#loading').show().find('span').text('Pockejte prosim, nacitam listy...');
+
+                },
+                success: function (data) {
+                    $('#loading').hide();
+                    $('#partialViewContainer').html(data).addClass('modal-animate').slideDown();
+                },
+                error: function () {
+                    $('#loading').hide();
+                }
+            });
+        });
+        $(document).on('submit', '#sheetSelectionForm', function (event) {
+            event.preventDefault();
+            $('#sheetSelectionContainer').hide();
+            $('#generatedContainer').hide();
+            var selectedSheet = $('#sheetSelector').val();
+            var selectedModel = $('input[type=radio][name=selectedModel]:checked').val();
+            $.ajax({
+                url: '/Files/GetColumns',
+                type: 'POST',
+                data: { sheetName: selectedSheet, selectedModel: selectedModel },
+                beforeSend: function () {
+                    $('#loading').show();
+                    $('#loading').show().find('span').text('Pockejte prosim, pripravuji data pro mapovani...');
+
+                },
+                success: function (data) {
+                    $('#loading').hide();
+                    $('#sheetSelectionContainer').html(data).addClass('modal-animate').slideDown();
+
+                },
+
+                error: function () {
+                    // Handle error
+                }
+            });
+        });
+        $(document).on('submit', '#previewDataForm', function (event) {
+            event.preventDefault();
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+            $('#sheetSelectionContainer').hide();
+            $('#partialViewContainer').hide();
+
+            var formData = new FormData(this);
+            var selectedModel = $('input[type=radio][name=selectedModel]:checked').val();
+            formData.append('selectedModel', selectedModel);
+            console.log(FormData);
+            $.ajax({
+                url: '/Files/PreviewData',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#loading').show();
+                    $('#loading').show().find('span').text('Pockejte prosim, trva generovani nahledu...');
+
+                },
+                success: function (data) {
+                    $('#loading').hide();
+                    $('#generatedContainer').html(data).addClass('modal-animate').slideDown();
+                    $('#partialViewContainer').hide();
+                },
+                error: function () {
+                    $('#loading').hide();
+                }
+            });
+        });
+        // $(document).on('submit', '#saveToDatabaseForm', function (event) {
+        //     event.preventDefault();
+        //     var formData = new FormData(this);
+        //     $.ajax({
+        //         url: '/Files/SaveToDatabase',
+        //         type: 'POST',
+        //         data: formData,
+        //         processData: false,
+        //         contentType: false,
+        //         beforeSend: function () {
+        //             $('#loading').show().find('span').text('Pockejte prosim, probiha ukladani dat do databazi...');
+        //         },
+        //         success: function (data) {
+        //             $('#loading').hide();
+        //             $('#generatedContainer').show().html(data);
+        //         },
+        //         error: function () {
+        //             $('#loading').hide();
+        //         }
+        //     });
+        // });
+
+        $(document).on('submit', '#saveMachineToDatabaseForm', function (event) {
+            event.preventDefault();
+            var rows = $('tbody tr');
+            var selectedModel = $('input[type=radio][name=selectedModel]:checked').val();
+
+            saveRow(rows, 0, selectedModel);
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });
+
+        $(document).on('submit', '#saveDeviceToDatabaseForm', function (event) {
+            event.preventDefault();
+            var rows = $('tbody tr');
+            var selectedModel = $('input[type=radio][name=selectedModel]:checked').val(); 
+
+            saveRow(rows, 0, selectedModel);
+            $('html, body').animate({ scrollTop: 0 }, 'fast');
+        });
+
+        function saveRow(rows, index, selectedModel) {
+            if (index >= rows.length) {
+                $('#loading').hide();
+                alert('Vsechna data byly ulozeny');
+                return;
+            }
+
+            var formData = new FormData();
+            var row = $(rows[index]);
+
+            row.find('input[type=hidden]').each(function () {
+                formData.append($(this).attr('name'), $(this).val());
+            });
+
+            formData.append('selectedModel', selectedModel); 
+
+            for (var pair of formData.entries()) {
+                console.log(pair[0] + ', ' + pair[1]);
+            }
+
+            $.ajax({
+                url: selectedModel === 'Machine' ? '/Files/SaveSingleMachineRowToDatabase' : '/Files/SaveSingleDeviceRowToDatabase', 
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function () {
+                    $('#loading').show().find('span').text('Pockejte prosim, probiha ukladani dat do databazi...');
+                },
+                success: function () {
+                    row.remove();
+                    saveRow(rows, index + 1, selectedModel);
+                },
+                error: function () {
+                    $('#loading').show().find('span').text('chyba zapisu dat');
+
+                    $('#loading').hide();
+                    // alert('chyba zapisu dat');
+                    row.remove();
+                    saveRow(rows, index + 1, selectedModel);
+                }
+            });
+        }
+    });
+    function ValidateFile() {
+        var fileInput = $('input[type=file][name=file]');
+        if (fileInput.val() == '') {
+            alert('Soubor nebyl zvoleny.');
+            return false;
+        }
+    }
+</script>

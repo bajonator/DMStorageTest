@@ -1,0 +1,171 @@
+﻿@model DMStorage.Core.ViewModels.DevicesViewModel
+
+@{
+    ViewData["Title"] = "Add Device";
+}
+
+@if (Model.Device.Id > 0)
+{
+    <h3 class="text-center my-text-shadow">Edice zarizeni</h3>
+}
+else
+{
+    <h3 class="text-center my-text-shadow">Nove zarizeni</h3>
+}
+
+<form id="deviceForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Device.Id, new { @id = "Device.Id" })
+    @Html.Hidden("DeviceId", Model.Device.Id)
+    @Html.ValidationSummary()
+    <div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.Name)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.Name, new { @class = "form-control bg-dark text-light", id = "deviceName", placeholder = "Nazev zarizeni" })
+                <span asp-validation-for="Device.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.TypeDeviceId, new { @class = "control-label" })
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.DropDownListFor(x => x.Device.TypeDeviceId,
+                         new SelectList(Model.TypeDevices, "Id", "Name"),
+                         "--zvolte typ--",
+                         new { @class = "form-control bg-dark text-light", id = "typeDeviceId" })
+                <span asp-validation-for="Device.TypeDeviceId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.DepartmentId, new { @class = "control-label" })
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.DropDownListFor(x => x.Device.DepartmentId,
+                         new SelectList(Model.Departments, "Id", "Name"),
+                         "--zvolte oddeleni--",
+                         new { @class = "form-control bg-dark text-light", id = "deviceDepartmentId" })
+                <span asp-validation-for="Device.DepartmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.MachineId, new { @class = "control-label" })
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.DropDownListFor(x => x.Device.MachineId,
+                         new SelectList(Model.Machines, "Id", "Name"),
+                         "--zvolte stroj--",
+                         new { @class = "form-control bg-dark text-light", id = "deviceMachineId" })
+                <span asp-validation-for="Device.TypeDeviceId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.SerialNumber)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.SerialNumber, new { @class = "form-control bg-dark text-light", id = "deviceSerialNumber", placeholder = "Seriove cislo" })
+                <span asp-validation-for="Device.SerialNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.InventoryNumber)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.InventoryNumber, new { @class = "form-control bg-dark text-light", id = "deviceInventoryNumber", placeholder = "Inventarni cislo" })
+                <span asp-validation-for="Device.InventoryNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.State)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.State, new { @class = "form-control bg-dark text-light", id = "deviceState", placeholder = "Stav zarizeni" })
+                <span asp-validation-for="Device.State" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.Ip)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.Ip, new { @class = "form-control bg-dark text-light", id = "deviceIp", placeholder = "IP" })
+                <span asp-validation-for="Device.Ip" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.MacAdress)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.MacAdress, new { @class = "form-control bg-dark text-light", id = "deviceMacAdress", placeholder = "Mac adress" })
+                <span asp-validation-for="Device.MacAdress" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.WPAUserName)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.WPAUserName, new { @class = "form-control bg-dark text-light", id = "deviceWPAUserName", placeholder = "WPA nazev uzivatele" })
+                <span asp-validation-for="Device.WPAUserName" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.WPAPassword)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Device.WPAPassword, new { @class = "form-control bg-dark text-light", id = "deviceWPAPassword", placeholder = "WPA heslo" })
+                <span asp-validation-for="Device.WPAPassword" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Device.Description)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextAreaFor(x => x.Device.Description, new { @class = "form-control bg-dark text-light", id = "deviceDesc", placeholder = "Popis" })
+                <span asp-validation-for="Device.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex flex-column text-center justify-content-center align-items-center">
+            <button class="btn btn-primary btn-sm mb-3" type="button" onclick="AddDevice();">
+                Ulozit
+            </button>
+        </div>
+        <div class="container-fluid d-flex justify-content-center my-border p-2 btn-group">
+            <button type="button" id="reloadTypeDeviceBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat typ zarizeni</button>
+        </div>
+    </div>
+</form>
+
+<script src="~/js/Devices.js"></script>
+<script>
+    $(document).ready(function () {
+        function loadPartialView(partialViewUrl, reloadButtonId) {
+            $.get(partialViewUrl, function (data) {
+                $('#partialContent').html(data);
+
+            });
+        }
+        $("#reloadTypeDeviceBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddTypeDevice", "Device")', '#reloadTypeDeviceBtn');
+        });
+    });
+
+    $(document).ready(function () {
+        $('#deviceForm').submit(function (event) {
+            event.preventDefault();
+            AddDevice();
+        });
+    });
+</script>

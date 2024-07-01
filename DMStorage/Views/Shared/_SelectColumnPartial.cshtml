@@ -1,0 +1,26 @@
+﻿@model List<string>
+@using DMStorage.Helpers
+
+@{
+    var selectedModel = TempData["selectedModel"] as string;
+}
+<h2 class="my-3 text-info text-center">Select Columns</h2>
+
+<form id="previewDataForm" method="post" enctype="multipart/form-data">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <div class="form-group row">
+            <label class="col-sm-3 col-form-label border-bottom py-2">@Model[i]</label>
+            <div class="col-sm-3">
+                <select name="columnMappings[@Model[i]]" class="form-control bg-dark text-light">
+                    <option value="">-- Select Property --</option>
+                    @foreach (var prop in FileHelper.GetProperties(selectedModel))
+                    {
+                        <option value="@prop">@prop</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+    <button type="submit" class="btn btn-primary mt-2 mb-2">Generate Data</button>
+</form>

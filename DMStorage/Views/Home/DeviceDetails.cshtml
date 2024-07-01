@@ -1,0 +1,108 @@
+﻿@model DMStorage.Core.ViewModels.DeviceViewModel
+
+@{
+    ViewData["Title"] = "Device detail";
+    int? typeDeviceId = TempData["TypeDeviceId"] as int?;
+}
+
+<div class="mt-5 container my-border">
+    <h2>Detajle zarizeni:</h2>
+
+    <div class="row">
+        <div class="col-md-2"><strong>Typ zarizeni:</strong></div>
+        <div class="col-md-9">@Model.TypeDevice.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>Nazev:</strong></div>
+        <div class="col-md-9">@Model.Device.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>Oddeleni:</strong></div>
+        <div class="col-md-9">@Model.Device.Department?.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>Stroj:</strong></div>
+        <div class="col-md-9">@Model.Device.Machine?.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>Serial Number:</strong></div>
+        <div class="col-md-9">@Model.Device.SerialNumber</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>Inventory Number:</strong></div>
+        <div class="col-md-9">@Model.Device.InventoryNumber</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>MacAdress:</strong></div>
+        <div class="col-md-9">@Model.Device.MacAdress</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>IP:</strong></div>
+        <div class="col-md-9">@Model.Device.Ip</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>State:</strong></div>
+        <div class="col-md-9">@Model.Device.State</div>
+    </div>
+    @if (ViewData["UserRoles"] != null && ((IList<string>)ViewData["UserRoles"]).Contains("FiOT"))
+    {
+        <div class="row">
+            <div class="col-md-2"><strong>WPAUserName:</strong></div>
+            <div class="col-md-9">@Model.Device.WPAUserName</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"><strong>WPAUserName:</strong></div>
+            <div class="col-md-9">@Model.Device.WPAPassword</div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-2"><strong>Description:</strong></div>
+        <div class="col-md-9">@Model.Device.Description</div>
+    </div>
+    @* <h3 class="mt-3">Zarizeni k typu:</h3>
+
+    <table class="custom-table table-dark">
+    <thead class="thead-dark sticky-top">
+    <tr>
+    <th scope="col">Typ</th>
+    <th scope="col">Nazev</th>
+    <th scope="col">IP</th>
+    <th scope="col">Mac</th>
+    <th scope="col">Komentar</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var variable in Model.Devices)
+    {
+    <tr>
+    <td>
+    @variable.TypeDevice.Name
+    </td>
+    <td>
+    @variable.Name
+    </td>
+    <td>
+    @variable.Ip
+    </td>
+    <td>
+    @variable.MacAdress
+    </td>
+    <td>
+    @variable.Description
+    </td>
+    </tr>
+    }
+    </tbody>
+    </table> *@
+
+
+    <div class="row d-flex justify-content-between align-bottom mr-2 ml-2 mt-5">
+        @if (typeDeviceId.HasValue)
+        {
+            <a style="color: red" href="@Url.Action("Details", "Home", new { type = "deviceType", id = TempData["typeDeviceId"] })">Zpet k typu zarizeni</a>
+        }
+        <a style="color: red" href="@Url.Action("Lists", "Home")">Zpet k listu</a>
+        <a style="color: red" href="@Url.Action("Index", "Home")">Home</a>
+    </div>
+</div>
+

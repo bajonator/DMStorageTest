@@ -1,0 +1,109 @@
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DMStorage</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="~/css/maincolors.css" rel="stylesheet" />
+    <link href="~/css/MainStyleSheet.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="text-light">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark border-bottom border-danger">
+        <span class="navbar-brand my-text-shadow" style="color:darkseagreen" href="#">
+            <span class="first-word">Device</span><span class="second-word">&</span><span class="third-word">Machine</span><span class="fourth-word">Storage</span>
+        </span>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-light" style="font-size:20px;" href="@Url.Action("Index", "Home")"><i class="fas fa-home" title="Home"> Home</i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-primary" style="font-size:20px" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-cogs" title="Stroje"></i> Stroje</a>
+                    <div class="dropdown-menu bg-primary">
+                        <a class="dropdown-item" style="color:gainsboro" asp-area="" asp-controller="Machine" asp-action="MachinesManagement">Zobrazit list stroju</a>
+                        <div class="dropdown-divider"></div>
+                        @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology") || ((IList<string>)ViewData["UserRoles"]).Contains("Maintenance")))
+                        {
+                            <a class="dropdown-item" style="color: black" href="#" id="addDepartmentBtn" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddDepartment", "Machine")">Pridat oddeleni</a>
+                            <a class="dropdown-item" style="color: black" href="#" id="addMachineBtn" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddMachine", "Machine")">Pridat stroj</a>
+                            <a class="dropdown-item" style="color: black" href="#" id="addVariableBtn" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddVariable", "Machine")">Pridat promennou</a>
+                        }
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-primary" data-toggle="dropdown" style="font-size:20px" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-mobile" title="Zarizeni"></i> Zarizeni</a>
+                    <div class="dropdown-menu bg-primary">
+                        <a class="dropdown-item" style="color:gainsboro" asp-area="" asp-controller="Device" asp-action="DevicesManagement">Zobrazit list zarizeni</a>
+                        <div class="dropdown-divider"></div>
+                        @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology") || ((IList<string>)ViewData["UserRoles"]).Contains("Maintenance")))
+                        {
+                            <a class="dropdown-item" href="#" style="color: black" id="addTypeDeviceBtn" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddTypeDevice", "Device")">Pridat typ zarizeni</a>
+                            <a class="dropdown-item" href="#" style="color: black" id="addDeviceBtn" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddDevice", "Device")">Pridat zarizeni</a>
+                        }
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary" style="font-size:20px" href="@Url.Action("Lists", "Home")"><i class="fas fa-list" title="List"></i> List</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-primary" style="font-size:20px" href="@Url.Action("SearchView", "Home")"><i class="fas fa-search" title="Search"></i> Vyhledavac</a>
+                </li>
+                @if (ViewData["UserRoles"] != null && ((IList<string>)ViewData["UserRoles"]).Contains("FiOT"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-primary" style="font-size:20px" href="@Url.Action("Upload", "Home")">
+                            <i class="fas fa-file-import" title="Import"></i> Import
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-danger" style="font-size:20px" href="@Url.Action("ManageRoles", "Admin")"><i class="fas fa-user" title="Role"></i> Role</a>
+                    </li>
+                }
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                @if (Context.Session.GetInt32("UserId") == null)
+                {
+                    <li class="nav-item"><a class="nav-link text-info" asp-controller="Account" asp-action="Login">Login</a></li>
+                    <li class="nav-item"><a class="nav-link text-info" asp-controller="Account" asp-action="Register">Register</a></li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <span class="nav-link text-secondary">Uzivatel: @Context.Session.GetString("UserName")</span>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link text-secondary">Email: @Context.Session.GetString("UserEmail")</span>
+                    </li>
+                    <li class="nav-item">
+                        <form asp-controller="Account" asp-action="Logout" method="post">
+                            <button type="submit" class="btn btn-link nav-link text-info">Logout</button>
+                        </form>
+                    </li>
+                }
+            </ul>
+        </div>
+    </nav>
+    <div class="myContainer-animate myContainer p-1">
+        <main role="main" class="pb-0">
+            @RenderBody()
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/searchjava.js"></script>
+    <script src="~/js/mymodal.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+@await Html.PartialAsync("_ModalPartial")
+</html>

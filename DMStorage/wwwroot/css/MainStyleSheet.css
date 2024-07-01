@@ -1,0 +1,280 @@
+﻿
+body {
+    display: flex;
+    flex-direction: column;
+}
+.my-shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0,0,0, 0.19);
+}
+
+.my-text-shadow {
+    text-shadow: 0 4px 3px rgba(0,0,0,0.3), 0 8px 13px rgba(0,0,0,0.1), 0 18px 23px rgba(0,0,0,0);
+}
+
+.mynav-dark {
+    background-color: #ff101010;
+}
+.sticky-thead {
+    position: sticky;
+    top: -1px;
+    z-index: 999;
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.custom-table {
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    border-radius: 10px;
+    overflow: clip;
+    border: 1px solid rgba(155, 155, 155, 0.2);
+    border-collapse: collapse;
+}
+    .custom-table th, .custom-table td {
+        padding: 8px;
+        text-align: center;
+    }
+
+    .custom-table th {
+        border: 0px solid black;
+        background-color: rgba(155,155,155,0.3);        
+        color: #68b1ef;
+    }
+
+    .custom-table tr {
+        border: 0px solid black;
+        background-color: rgba(0, 0, 0, 0.1);
+        color: gainsboro;
+        padding: 0;
+    }
+    .custom-table tr:hover {
+        border: 1px 1px 0px 0px solid black;
+        background-color: rgba(30,30,30,0.1);
+        color: orange;
+        padding: 0;
+    }
+
+.my-border {
+    padding: 10px;
+    border: 0.1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    background-color: rgba(155,155,155,0.1);
+
+}
+.btn-delete {
+    display: none;
+}
+
+.my-containerBtn {
+    display: flex;
+    flex-direction: row;
+}
+
+    .my-containerBtn .btn {
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0px;
+        width: 120px;
+        height: 90px;
+        font-weight: bold;
+        background-color: transparent;
+        transition: background-color 0.6s ease, color 0.6s ease;
+    }
+
+        .my-containerBtn .btn:hover {
+            background-color: #dc3545;
+        }
+
+    .my-containerBtn .btnList:hover {
+        background-color: #007bff;
+    }
+
+    .my-containerBtn .btn i,
+    .my-containerBtn .btnList i {
+        margin-bottom: 5px;
+        font-size: 30px;
+        color: #141212;
+        text-shadow: 2px 4px 3px rgba(0,0,0,0.2), 0 8px 13px rgba(0,0,0,0.1), 0 18px 23px rgba(0,0,0,0);
+    }
+
+
+
+    .my-containerBtn .btn:hover i {
+        color: #007bff;
+    }
+
+    .my-containerBtn .btnList:hover i {
+        color: #dc3545;
+    }
+
+tr:hover .btn-delete {
+    display: inline-block;
+}
+
+.delete-button {
+    background-color: transparent;
+    border: none;
+    color: red;
+    cursor: pointer;
+}
+
+.navbar-custom {
+    flex-direction: column;
+    align-items: center;
+}
+
+    .navbar-custom h6 {
+        width: 100%;
+        text-align: center;
+        margin: 0;
+    }
+
+.my-container {
+/*    padding: 5px;
+    margin-top: 20px;
+    border-top: 1px solid #c7c7c7c9;*/
+}
+
+.first-word, .third-word, .fourth-word {
+    display: inline-block;
+}
+
+    .first-word::first-letter, .third-word::first-letter, .fourth-word::first-letter {
+        color: royalblue;
+    }
+
+.second-word {
+    color: red;
+}
+
+.center-div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 48px 0 0;
+}
+
+.sidebar-sticky {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    height: calc(100vh - 48px);
+    padding-top: .5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.sidebar-heading {
+    padding: .25rem 1rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+.nav-link {
+    color: springgreen;
+}
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+.main-content {
+    margin-left: auto;
+    padding: 20px;
+}
+
+.myBtn {
+    background-color: transparent;
+    border: 0;
+    height: 40px;
+    padding: 10px;
+    border-radius: 0;
+    font-weight: bold;
+    color: blanchedalmond;
+    transition: background-color 0.6s ease;
+}
+
+    .myBtn:hover {
+        background-color: firebrick;
+        color: blanchedalmond;
+    }
+
+    .myBtn:focus {
+        background-color: darkred;
+        color: blanchedalmond;
+    }
+
+.myContainer {
+    justify-content: center;
+    align-items: center;
+
+}
+
+.myContainerLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 85vh;
+}
+.myContainer-animate {
+    position: relative;
+    animation: slide-up 0.4s ease-in-out;
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+@media (max-width: 992px) {
+    .navbar-nav {
+        text-align: center;
+    }
+
+        .navbar-nav .nav-item {
+            margin: 0 auto;
+        }
+}
+.scrollable-list {
+    line-height: 10px;
+    max-height: 630px;
+    overflow-y: auto;
+    padding: 0; 
+    margin: 0; 
+}
+
+.scrollable-listDetails {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 5px; 
+    max-height: 200px;
+    overflow-y: auto; 
+    padding: 0;
+    margin: 0; 
+    list-style: none;
+    text-align: center;
+}
+
+    .scrollable-listDetails li {
+        width: auto;
+        padding: 5px;
+        background-color: #333;
+        color: #fff; 
+        border-radius: 5px; 
+    }

@@ -1,0 +1,79 @@
+﻿@model List<DMStorage.Core.Models.Domains.MachineImport>
+
+@{
+    ViewData["Title"] = "Preview Data";
+    var fileName = TempData["filePath"] as string;
+}
+
+<h4 class="my-3 text-info text-center">Prehled dat pro: @fileName</h4>
+<form id="saveMachineToDatabaseForm">
+
+    <div class="table-responsive my-border">
+        <table class="custom-table table-dark">
+            <thead class="thead-dark sticky-top">
+                <tr>
+                    <th scope="col">Oddeleni</th>
+                    <th scope="col">Stroj</th>
+                    <th scope="col">IP</th>
+                    <th scope="col">VLan</th>
+                    <th scope="col">Mac Adress</th>
+                    <th scope="col">Port</th>
+                    <th scope="col">DMCZ Connection</th>
+                    <th scope="col">OPC Driver</th>
+                    <th scope="col">OPC PLC</th>
+                    <th scope="col">Original PLC</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input type="hidden" name="DepartmentName" value="@Model[i].DepartmentName" />
+                            @Model[i].DepartmentName
+                        </td>
+                        <td>
+                            <input type="hidden" name="MachineName" value="@Model[i].MachineName" />
+                            @Model[i].MachineName
+                        </td>
+                        <td>
+                            <input type="hidden" name="Ip" value="@Model[i].Ip" />
+                            @Model[i].Ip
+                        </td>
+                        <td>
+                            <input type="hidden" name="VLan" value="@Model[i].VLan" />
+                            @Model[i].VLan
+                        </td>
+                        <td>
+                            <input type="hidden" name="MacAdress" value="@Model[i].MacAdress" />
+                            @Model[i].MacAdress
+                        </td>
+                        <td>
+                            <input type="hidden" name="Port" value="@Model[i].Port" />
+                            @Model[i].Port
+                        </td>
+                        <td>
+                            <input type="hidden" name="DMCZ_Connection" value="@Model[i].DMCZ_Connection" />
+                            @Model[i].DMCZ_Connection
+                        </td>
+                        <td>
+                            <input type="hidden" name="OPC_Driver" value="@Model[i].OPC_Driver" />
+                            @Model[i].OPC_Driver
+                        </td>
+                        <td>
+                            <input type="hidden" name="OPC_PLC" value="@Model[i].OPC_PLC" />
+                            @Model[i].OPC_PLC
+                        </td>
+                        <td>
+                            <input type="hidden" name="Original_PLC" value="@Model[i].Original_PLC" />
+                            @Model[i].Original_PLC
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <input type="hidden" name="file" value="@TempData["fileName"]" />
+    <button type="submit" class="btn btn-success mt-2">Ulozit do databazi</button>
+</form>

@@ -1,0 +1,102 @@
+﻿@model DMStorage.Core.ViewModels.DevicesViewModel
+
+<div class="table-responsive" id="deviceTable" style="max-height: 565px; overflow-y: visible;">
+    <table class="custom-table">
+        <thead class="thead-dark sticky-top">
+            <tr>
+                <th scope="col">Oddeleni</th>
+                <th scope="col">Typ</th>
+                <th scope="col">Nazev</th>
+                <th scope="col">Stroj</th>
+                <th scope="col">IP</th>
+                <th scope="col">MacAdress</th>
+                <th scope="col">Inventory Number</th>
+                <th scope="col">SerialNumber</th>
+                @if (ViewData["UserRoles"] != null && ((IList<string>)ViewData["UserRoles"]).Contains("FiOT"))
+                {
+                    <th scope="col">WPAUserName</th>
+                    <th scope="col">WPAPassword</th>
+                }
+                <th scope="col">State</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody id="tDeviceBody">
+            @if (Model != null && Model.TypeDevices.Any())
+            {
+                foreach (var typ in Model.TypeDevices)
+                {
+                    @if (Model != null && Model.Devices.Any())
+                    {
+                        foreach (var dev in typ.Devices)
+                        {
+                            <tr>
+                                @*                             <td>
+                <a href="#" class="font-weight-bold" data-toggle="modal" data-target="#exampleModal" data-url="@Url.Action("AddDevice", "Device", new { id = dev.Id })" onclick="loadDevicePartialView(this)">
+                @dev.Id
+                </a>
+                </td> *@
+                                <td>@dev.Department?.Name</td>
+                                <td>@typ.Name</td>
+                                <td>@dev.Name</td>
+                                <td>@dev.Machine?.Name</td>
+                                <td>@dev.Ip</td>
+                                <td>@dev.MacAdress</td>
+                                <td>@dev.InventoryNumber</td>
+                                <td>@dev.SerialNumber</td>
+                                @if (ViewData["UserRoles"] != null && ((IList<string>)ViewData["UserRoles"]).Contains("FiOT"))
+                                {
+                                    <td>@dev.WPAUserName</td>
+                                    <td>@dev.WPAPassword</td>
+                                }
+                                <td>@dev.State</td>
+                                <td>@dev.Description</td>
+                                <td style="width:100px">
+                                    @if (ViewData["UserRoles"] != null && (((IList<string>)ViewData["UserRoles"]).Contains("FiOT") || ((IList<string>)ViewData["UserRoles"]).Contains("Technology")))
+                                    {
+                                        <button class="btn bg-transparent btn-sm btn-outline-primary text-warning border-0 btn-delete mr-3" style="font-size:14px; padding:0;" data-toggle="modal" data-target="#exampleModal" title="Edituj" data-url="@Url.Action("AddDevice", "Device", new { id = dev.Id })" onclick="loadDevicePartialView(this)" style="cursor: pointer;">
+                                            <i class="fas fa-pencil-alt"></i>
+                                        </button>
+                                        <button class="btn bg-transparent btn-sm btn-outline-primary text-success border-0 btn-delete" style="font-size:14px; padding:0;" title="Odstranit" onclick="deleteDevice('@dev.Id', this)">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td class="text-center" colspan="12">
+                                Neni nic v databazi k zobrazeni.
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center" colspan="12">
+                        Neni nic v databazi k zobrazeni.
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function loadDevicePartialView(element) {
+        var url = $(element).data('url');
+        console.log("Loading partial view from URL: " + url);
+
+        $.get(url, function (data) {
+            $('#partialContent').html(data);
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            console.error("Error loading partial view: ", textStatus, errorThrown);
+        });
+    }
+</script>

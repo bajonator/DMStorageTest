@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">DMStorage</h1>
+</div>
+
+<div class="container">
+    <div class="row justify-content-center align-items-center myContainer">
+        <div class="col-md-4">
+            <div id="authContainer">
+                @{
+                    await Html.RenderPartialAsync("/Views/User/_LoginPartial.cshtml");
+                }
+            </div>
+            <button id="toggleAuth" class="btn btn-link mt-5 text-center">Register</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#toggleAuth").click(function (e) {
+            e.preventDefault();
+            var currentText = $(this).text();
+            if (currentText === "Register") {
+                $("#authContainer").load("@Url.Action("LoadRegisterPartial", "Home")");
+                $(this).text("Login");
+            } else {
+                $("#authContainer").load("@Url.Action("LoadLoginPartial", "Home")");
+                $(this).text("Register");
+            }
+        });
+    });
+</script>

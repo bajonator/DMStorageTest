@@ -1,0 +1,64 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentsViewModel
+
+<h3 class="text-center my-text-shadow">Nove oddeleni</h3>
+
+<form id="departmentForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Department.Id, new { @id = "Department.Id" })
+
+    <div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Department.Name)
+            </div> *@
+            <div class="form-group ml-1 mt-1 col-md-10" id="depname">
+                @Html.TextBoxFor(x => x.Department.Name, new { @class = "form-control bg-dark text-light", id = "departmentName", placeholder = "Nazev oddeleni" })
+                <span asp-validation-for="Department.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            @*             <div class="form-group mt-1 col-md-4">
+            @Html.LabelFor(x => x.Department.Number)
+            </div> *@
+            <div class="form-group ml-1 mt-1 col-md-10" id="depNum">
+                @Html.TextBoxFor(x => x.Department.Number, new { @class = "form-control bg-dark text-light", id = "departmentNumber", placeholder = "ID oddeleni" })
+                <span asp-validation-for="Department.Number" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex flex-column text-center justify-content-center align-items-center">
+            <button class="btn btn-primary btn-sm mt-0 mr-3 ml-3 mb-3" type="button" onclick="AddDepartment();">
+                Ulozit
+            </button>
+        </div>
+        <div class="container-fluid d-flex justify-content-center my-border p-2 btn-group">
+            <button type="button" id="reloadMachineBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat stroj </button>
+            <button type="button" id="reloadVariableBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat promennou</button>
+        </div>
+    </div>
+</form>
+
+<script src="~/js/machines.js"></script>
+
+<script>
+    $(document).ready(function () {
+        function loadPartialView(partialViewUrl, reloadButtonId) {
+            $.get(partialViewUrl, function (data) {
+                $('#partialContent').html(data);
+            });
+        }
+        $("#reloadMachineBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddMachine", "Machine")', '#reloadMachineBtn');
+        });
+        $("#reloadVariableBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddVariable", "Machine")', '#reloadVariableBtn');
+        });
+    });
+    $(document).ready(function () {
+        $('#departmentForm').submit(function (event) {
+            event.preventDefault();
+            AddDepartment();
+        });
+    });
+</script>

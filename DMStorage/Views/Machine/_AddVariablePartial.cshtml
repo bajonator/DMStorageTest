@@ -1,0 +1,136 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentsViewModel
+
+@{
+    ViewData["Title"] = "Add Variable";
+}
+
+
+<h3 class="text-center my-text-shadow">Nova promenna</h3>
+
+
+<form id="variableForm">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(x => x.Variable.Id, new { @id = "Variable.Id" })
+
+    <div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Variable.Name)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Variable.Name, new { @class = "form-control bg-dark text-light", id = "variableName", placeholder = "Nazev promenne" })
+                <span asp-validation-for="Variable.Name" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+            <div class="form-group mt-1 ml-1 col-md-10">
+                <div class="text-left">
+                    @Html.LabelFor(x => x.Variable.MachineId):
+                </div>
+                <select id="machineId" name="Variable.MachineId" class="form-control bg-dark text-light" size="10" style="max-height: 200px; overflow-y: auto;">
+                    @* <option value="">--zvolte stroj--</option> *@
+                </select>
+                <span asp-validation-for="Variable.MachineId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Variable.DataType)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextBoxFor(x => x.Variable.DataType, new { @class = "form-control bg-dark text-light", id = "variableDataType", placeholder = "Data typ" })
+                <span asp-validation-for="Variable.DataType" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="row text-right justify-content-center">
+@*             <div class="form-group mt-1 col-md-4">
+                @Html.LabelFor(x => x.Variable.Description)
+            </div> *@
+            <div class="form-group mt-1 ml-1 col-md-10">
+                @Html.TextAreaFor(x => x.Variable.Description, new { @class = "form-control bg-dark text-light", id = "variableDescription", placeholder = "Popis" })
+                <span asp-validation-for="Variable.Description" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="d-flex flex-row text-center justify-content-center align-items-center">
+            <button class="btn btn-primary btn-sm mt-0 mr-3 ml-3 mb-3" type="button" onclick="AddVariable();">
+                Ulozit
+            </button>
+        </div>
+        <div class="container-fluid d-flex justify-content-center my-border p-2 btn-group">
+            <button type="button" id="reloadDepartmentBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat oddeleni</button>
+            <button type="button" id="reloadMachineBtn" class="btn btn-sm btn-outline-success" data-toggle="modal" data-target="#exampleModal">Pridat stroj </button>
+        </div>
+    </div>
+</form>
+
+<script src="~/js/machines.js"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        $('#machineId').on('scroll', function () {
+            if (this.scrollTop + this.clientHeight >= this.scrollHeight - 30) {
+                pageNumber++;
+                console.log("Ładowanie więcej maszyn dla strony:", pageNumber);
+                loadMachines(pageNumber, pageSize);
+            }
+        });
+
+        var pageNumber = 1;
+        const pageSize = 100;
+        loadMachines(pageNumber, pageSize);
+
+        function loadMachines(pageNumber, pageSize) {
+            $.ajax({
+                url: '/machine/GetMachinesPages',
+                type: 'GET',
+                dataType: 'json',
+                data: { pageNumber: pageNumber, pageSize: pageSize },
+                contentType: 'application/json;charset=utf-8',
+                success: function (response) {
+                    console.log("Pobrano dane maszyn:", response);
+                    if (response && response.length > 0) {
+                        addMachinesToSelect(response);
+                    } else {
+                        console.log("Brak więcej maszyn do załadowania.");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Wystąpił błąd podczas ładowania maszyn:", status, error);
+                }
+            });
+        }
+
+        function addMachinesToSelect(machines) {
+            var select = document.getElementById('machineId');
+            machines.forEach(machine => {
+                var option = document.createElement('option');
+                option.value = machine.id;
+                option.textContent = machine.name;
+                select.appendChild(option);
+            });
+        }
+
+        function loadPartialView(partialViewUrl, reloadButtonId) {
+            $.get(partialViewUrl, function (data) {
+                $('#partialContent').html(data);
+            });
+        }
+
+        $("#reloadDepartmentBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddDepartment", "Machine")', '#reloadDepartmentBtn');
+        });
+
+        $("#reloadMachineBtn").click(function (e) {
+            e.stopPropagation();
+            loadPartialView('@Url.Action("AddMachine", "Machine")', '#reloadMachineBtn');
+        });
+
+        $('#variableForm').submit(function (event) {
+            event.preventDefault();
+            AddVariable();
+        });
+    });
+</script>

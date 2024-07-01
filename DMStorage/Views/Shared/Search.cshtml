@@ -1,0 +1,49 @@
+﻿@model DMStorage.Core.ViewModels.SearchViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="my-border">
+    <h2 class="my-text-shadow text-info text-center my-border">Vyhledavac</h2>
+
+    <span class="form-inline justify-content-center">Vyhledavac umoznuje prohledavani databazi, a zobrazeni vysledku.</span>
+
+    <form id="searchForm" class="form-inline justify-content-center">
+        <input class="form-control mt-2 mr-sm-2 bg-dark text-light" style="height:30px" type="search" id="searchInput" placeholder="Search" aria-label="Search">
+        <button class="btn btn-sm btn-outline-success mt-2" type="submit">Search</button>
+    </form>
+</div>
+<div id="searchResultsContainer" class="my-container"></div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').on('submit', function (event) {
+                event.preventDefault();
+
+                var query = $('#searchInput').val().trim();
+                if (!query) {
+                    alert('Zadejte hledaný výraz.');
+                    return;
+                }
+
+                $.ajax({
+                    url: '/Home/Search',
+                    type: 'GET',
+                    data: { query: query },
+                    beforeSend: function () {
+                        $('#searchResultsContainer').hide();
+                    },
+                    success: function (data) {
+                        $('#searchResultsContainer').show().html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Požadavek na vyhledávání se nezdařil:', status, error);
+                        alert('Při zpracování vyhledávání došlo k chybě. Prosím zkuste to znovu.');
+                    }
+                });
+            });
+        });
+    </script>
+}

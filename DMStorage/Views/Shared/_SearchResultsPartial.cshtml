@@ -1,0 +1,142 @@
+﻿@model DMStorage.Core.ViewModels.SearchViewModel
+
+
+<div class=" my-border mt-2">
+
+    <h2 class="d-flex justify-content-center text-info">Výsledky vyhledávání</h2>
+
+    @if (Model.Devices.Any() || Model.Machines.Any() || Model.Departments.Any() || Model.TypeDevices.Any())
+    {
+        @if (Model.Departments.Any())
+        {
+            <h3 class="m-2 border-top border-primary">Oddeleni</h3>
+            <h6 class="text-success">Ve výsledcích vyhledávání nalezeno: @Model.Departments.Count záznamů</h6>
+            <div class="table-responsive pt-0" id="machineTable" style="max-height: 565px; overflow-y: auto;">
+
+                <table class="custom-table">
+                    <thead class="thead-dark sticky-thead">
+                        <tr>
+                            <th>Id Oddeleni</th>
+                            <th>Nazev Oddeleni</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var department in Model.Departments)
+                        {
+                            <tr onclick="window.location.href = '@Url.Action("Details", "Home", new { type="department", id = department.Id })'" style="cursor:pointer">
+                                <td>@department.Number</td>
+                                <td>@department.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        @if (Model.Machines.Any())
+        {
+            <h3 class="m-2 border-top border-primary">Stroje</h3>
+            <h6 class="text-success">Ve výsledcích vyhledávání nalezeno: @Model.Machines.Count záznamů</h6>
+            <div class="table-responsive pt-0 " id="machineTable" style="max-height: 565px; overflow-y: auto;">
+
+                <table class="custom-table">
+                    <thead class="thead-dark sticky-thead">
+                        <tr>
+                            <th>Nazev</th>
+                            <th>Oddeleni</th>
+                            <th>IP</th>
+                            <th>MAc</th>
+                            <th>Vlan</th>
+                            <th>PLC</th>
+                            <th>OPC_PLC</th>
+                            <th>OPC_Driver</th>
+                            <th>Port</th>
+                            <th>DMCZ_Connection</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var machine in Model.Machines)
+                        {
+                            <tr onclick="window.location.href = '@Url.Action("Details", "Home", new { type="machine", id = machine.Id })'" style="cursor:pointer">
+                                <td>@machine.Name</td>
+                                <td>@machine.Department?.Name</td>
+                                <td>@machine.Ip</td>
+                                <td>@machine.MacAdress</td>
+                                <td>@machine.VLan</td>
+                                <td>@machine.Original_PLC</td>
+                                <td>@machine.OPC_PLC</td>
+                                <td>@machine.OPC_Driver</td>
+                                <td>@machine.Port</td>
+                                <td>@machine.DMCZ_Connection</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        @if (Model.Devices.Any())
+        {
+            <h3 class="m-2 border-top border-primary">Zarizeni</h3>
+            <h6 class="text-success">Ve výsledcích vyhledávání nalezeno: @Model.Devices.Count záznamů</h6>
+            <div class="table-responsive pt-0" style="max-height: 565px; overflow-y: auto;">
+
+                <table class="custom-table">
+                    <thead class="thead-dark sticky-thead">
+                        <tr>
+                            <th>Nazev</th>
+                            <th>MAC Address</th>
+                            <th>IP</th>
+                            <th>Typ</th>
+                            <th>InventoryNumber</th>
+                            <th>SerialNumber</th>
+                            <th>Oddeleni</th>
+                            <th>Stroj</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var device in Model.Devices)
+                        {
+                            <tr onclick="window.location.href = '@Url.Action("Details", "Home", new { type="device", id = device.Id })'" style="cursor:pointer">
+                                <td>@device.Name</td>
+                                <td>@device.MacAdress</td>
+                                <td>@device.Ip</td>
+                                <td>@device.TypeDevice?.Name</td>
+                                <td>@device.InventoryNumber</td>
+                                <td>@device.SerialNumber</td>
+                                <td>@device.Department?.Name</td>
+                                <td>@device.Machine?.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        @if (Model.TypeDevices.Any())
+        {
+            <h3 class="m-2 border-top border-primary">Typy zarizeni</h3>
+            <h6 class="text-success">Ve výsledcích vyhledávání nalezeno: @Model.TypeDevices.Count záznamů</h6>
+            <div class="table-responsive pt-0" style="max-height: 565px; overflow-y: auto;">
+
+                <table class="custom-table">
+                    <thead class="thead-dark sticky-thead">
+                        <tr>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var typedevice in Model.TypeDevices)
+                        {
+                            <tr onclick="window.location.href = '@Url.Action("Details", "Home", new { type="deviceType", id = typedevice.Id })'" style="cursor:pointer">
+                                <td>@typedevice.Name</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <span class="form-inline justify-content-center">Nic nenalezeno.</span>
+    }
+</div>

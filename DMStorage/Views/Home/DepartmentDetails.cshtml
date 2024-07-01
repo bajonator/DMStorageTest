@@ -1,0 +1,55 @@
+﻿@model DMStorage.Core.ViewModels.DepartmentViewModel
+
+@{
+    ViewData["Title"] = "Department detail";
+}
+
+<div class="mt-5 container my-border">
+    <h2>Detajle oddeleni:</h2>
+
+    <div class="row">
+        <div class="col-md-2"><strong>Nazev:</strong></div>
+        <div class="col-md-9">@Model.Department.Name</div>
+    </div>
+    <div class="row">
+        <div class="col-md-2"><strong>ID oddeleni:</strong></div>
+        <div class="col-md-9">@Model.Department.Number</div>
+    </div>
+
+    <h3 class="mt-3">Stroje na oddleni:</h3>
+    <ul class="scrollable-listDetails">
+        @if (Model.Machines.Any())
+        {
+            @foreach (var machine in Model.Machines)
+            {
+                <li>
+                    <a style="color: wheat" href="@Url.Action("Details", "Home", new { type = "machine", id = machine.Id })">@machine.Name</a>
+                </li>
+            }
+        }
+        else
+        {
+            <p>Nenalezeno.</p>
+        }
+    </ul>
+    <h3 class="mt-3">Zarizeni na oddleni:</h3>
+    <ul class="scrollable-listDetails">
+        @if (Model.Devices.Any())
+        {
+            @foreach (var device in Model.Devices)
+            {
+                <li>
+                    <a style="color: wheat" href="@Url.Action("Details", "Home", new { type = "device", id = device.Id })">@device.Name</a>
+                </li>
+            }
+        }
+        else
+        {
+            <p>Nenalezeno.</p>
+        }
+    </ul>
+    <div class="row d-flex justify-content-between align-bottom mr-2 ml-2 mt-5">
+        <a style="color: red" href="@Url.Action("Lists", "Home")">Zpet k listu</a>
+        <a style="color: red" href="@Url.Action("Index", "Home")">Home</a>
+    </div>
+</div>

@@ -1,0 +1,17 @@
+﻿:root {
+    --body-bg-color: #202020;
+    --main-bg-color: #202020;
+    --a-linki-color: wheat;
+}
+
+body {
+    background-color: var(--body-bg-color);
+}
+
+main{
+    background-color: var(--main-bg-color);
+}
+
+a{
+    color: var(--a-linki-color);
+}

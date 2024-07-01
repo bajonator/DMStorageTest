@@ -1,0 +1,86 @@
+﻿@using DMStorage.Helpers
+@model DMStorage.Core.ViewModels.ManageRolesViewModel
+
+@{
+    ViewData["Title"] = "Manage Users";
+}
+
+<div class="my-border">
+    <div class="row text-center justify-content-center d-flex">
+        <h2 class=" mt-2 mb-3 text-info">Správa uživatelských rolí</h2>
+    </div>
+</div>
+
+<div class="mt-2 my-border table-responsive">
+    <table class="custom-table">
+        <thead class="thead-dark sticky-top">
+            <tr>
+                <th scope="col">Uzivatel</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+                <th scope="col">Zmena Role</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr>
+                    <td>@user.Username</td>
+                    <td>@user.Email</td>
+                    <td>
+                        <span class="badge @ModelHelper.GetRoleBadgeClass(user.Role.Name)">@user.Role.Name</span>
+                    </td>
+                    <td>
+                        <div class="row d-inline-flex align-items-center">
+                            <form class="d-inline-flex">
+                                <input type="hidden" name="userId" value="@user.Id" />
+                                <select name="roleId" class="form-control bg-dark text-light mr-3" style="width: auto; display: inline-block;">
+                                    @foreach (var role in Model.Roles)
+                                    {
+                                        <option value="@role.Id">@role.Name</option>
+                                    }
+                                </select>
+                                <button style="font-size:21px" class="btn bg-transparent btn-sm btn-outline-primary text-success border-0" title="Ulozit" type="button" onclick="AssignUser(this);">
+                                    <i class="fas fa-save"></i>
+                                </button>
+                            </form>
+                            <button style="font-size:18px" class="btn bg-transparent btn-sm btn-outline-primary text-danger border-0" onclick="deleteUser('@user.Id', this)" title="Odstranit uzivatela">
+                                <i class="fas fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script src="~/js/users.js"></script>
+
+<script type="text/javascript">
+
+    function deleteUser(id, btn) {
+        if (!confirm("Opravdu chcete odstranit uzivatela?"))
+            return;
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("Delete", "Admin")",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data.success) {
+                    var row = btn.parentNode.parentNode.parentNode;
+                    row.parentNode.removeChild(row);
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function (data) {
+                alert(data.message)
+            },
+            dataType: "json"
+        });
+    }
+</script>
+

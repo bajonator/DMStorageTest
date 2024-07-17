@@ -83,7 +83,7 @@
 
         function loadMachines(pageNumber, pageSize) {
             $.ajax({
-                url: '/machine/GetMachinesPages',
+                url: 'GetMachinesPages',
                 type: 'GET',
                 dataType: 'json',
                 data: { pageNumber: pageNumber, pageSize: pageSize },
